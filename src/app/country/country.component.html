@@ -1,0 +1,8 @@
+
+<main>
+    <select name="countries" id="countries-selection">
+        @for (country of countries; track $index) {
+            <option value="{{country}}">{{ country }}</option>
+        }
+    </select>
+</main>
