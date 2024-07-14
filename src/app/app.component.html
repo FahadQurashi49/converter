@@ -1,11 +1,12 @@
-<div class="text-3xl font-bold underline">Country Compare</div>
+<div class="underline font-bold">Country Compare</div>
 
-<main>
-  <div>
-    <app-country></app-country>
-    <app-time></app-time>
-    <app-currency></app-currency>
-    <app-weather></app-weather>
+<main class="flex h-screen">
+  <div class="m-auto">
+    <div class="grid items-center md:grid-cols-4">
+      <app-country></app-country>
+      <app-time></app-time>
+      <app-currency></app-currency>
+      <app-weather></app-weather>
+    </div>
   </div>
-  
 </main>
