@@ -5,8 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "prod": "ng serve --configuration=production",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-css": "tailwindcss build src/styles.css -o public/styles.css"
   },
   "private": true,
   "dependencies": {
