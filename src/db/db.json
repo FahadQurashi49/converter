@@ -1,0 +1,66 @@
+{
+    "country": {
+        "countryList": [
+            {
+                "id": "1",
+                "name": "Australia",
+                "isCurrent": true,
+                "timezone": "Asia/Karachi"
+            },
+            {
+                "id": "2",
+                "name": "Canada",
+                "isCurrent": true,
+                "timezone": "Asia/Karachi"
+            },
+            {
+                "id": "3",
+                "name": "Finland",
+                "isCurrent": false,
+                "timezone": "Europe/Tallinn"
+            },
+            {
+                "id": "4",
+                "name": "Germany",
+                "isCurrent": false,
+                "timezone": "Europe/Berlin"
+            },
+            {
+                "id": "5",
+                "name": "Pakistan",
+                "isCurrent": true,
+                "timezone": "Asia/Karachi"
+            },
+            {
+                "id": "6",
+                "name": "Poland",
+                "isCurrent": false,
+                "timezone": "Europe/Warsaw"
+            },
+            {
+                "id": "7",
+                "name": "Saudi Arabia",
+                "isCurrent": true,
+                "timezone": "Asia/Riyadh"
+            },
+            {
+                "id": "8",
+                "name": "United Arab Emirates",
+                "isCurrent": true,
+                "timezone": "Asia/Dubai"
+            },
+            {
+                "id": "9",
+                "name": "United Kingdom",
+                "isCurrent": true,
+                "timezone": "Europe/London"
+            },
+            {
+                "id": "10",
+                "name": "United States",
+                "isCurrent": true,
+                "timezone": "America/New_York"
+            }
+        ]
+    }
+}
