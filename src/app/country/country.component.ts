@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, model, signal } from '@angular/core';
+import { Component, OnInit, Signal, model, signal } from '@angular/core';
 import { Country, CountryResponse } from './country.model';
 import { Observable, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
+import { toSignal } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -15,12 +16,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class CountryComponent implements OnInit {
 
-  countryResponse$: Observable<CountryResponse>;
-  countries$: Observable<Country[]>;
-  
-  countries = signal<Country[]>([]);
-  // selectedCountryId = model.required<number | undefined>();
   selectedCountry = model.required<Country>();
+  countries: Country[] | undefined;
+  countryResponse:  Signal<CountryResponse>
   selectedCountryId: number = 5;
 
   ngOnInit(): void {
@@ -29,20 +27,14 @@ export class CountryComponent implements OnInit {
   
 
   constructor(private httpClient: HttpClient) {
-      this.countryResponse$ = this.httpClient.get<CountryResponse>('http://localhost:3000/country');
-      this.countries$ = this.countryResponse$.pipe(
-        map((response: any) => {
-          return response.countryList
-        })
-      );
-      this.countries$.subscribe((countries: Country[]) => this.countries.set(countries));
-      
+    this.countryResponse = 
+      toSignal(this.httpClient.get<CountryResponse>('http://localhost:3000/country'), { initialValue: { countryList: [] }, requireSync: false });  
   }
   
   
   public onCountrySelectionChange(event: any) {
     const countryId = event?.target?.value;
-    const selectedCountry = this.countries().filter(
+    const selectedCountry = this.countryResponse()?.countryList?.filter(
       (country: Country) => country.id === countryId
     ).pop();
     this.selectedCountry.set(selectedCountry!);

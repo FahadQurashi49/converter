@@ -5,13 +5,13 @@
                 "id": "1",
                 "name": "Australia",
                 "isCurrent": true,
-                "timezone": "Asia/Karachi"
+                "timezone": "Australia/Sydney"
             },
             {
                 "id": "2",
                 "name": "Canada",
-                "isCurrent": true,
-                "timezone": "Asia/Karachi"
+                "isCurrent": false,
+                "timezone": "America/Toronto"
             },
             {
                 "id": "3",

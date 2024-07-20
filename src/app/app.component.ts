@@ -14,7 +14,7 @@ import { Country } from './country/country.model';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  initialCountry: Country = { id: 5, name: "Pakistan", timezone: "Asia/Karachi" }
+  initialCountry: Country = { id: 5, name: "Pakistan", isCurrent: true, timezone: "Asia/Karachi" }
   selCountry = signal<Country>(this.initialCountry);
 
   // onSelectedCountryChange (country: any) {

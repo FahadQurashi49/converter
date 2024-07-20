@@ -6,7 +6,7 @@ see: https://stackoverflow.com/a/78763575/4233036
 -->
 <main>
     <select name="countries" id="countries-selection" [(ngModel)]="selectedCountryId" (change)="onCountrySelectionChange($event)">
-        @for (country of countries$ | async; track country.id) {
+        @for (country of countryResponse().countryList; track country.id) {
             <option [value]="country.id">{{ country.name }}</option>
         }
     </select>
