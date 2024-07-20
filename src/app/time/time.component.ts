@@ -17,15 +17,14 @@ export class TimeComponent {
 
   selectedCountry = input<Country>();
   selectedCountry$ = toObservable(this.selectedCountry);
-  timeResponse$: Observable<TimeResponse>
   time = signal<Time>({ hours: 0, minutes: 0});
 
   constructor(private httpClient: HttpClient) {
-    this.timeResponse$ = this.selectedCountry$.pipe(
+    const timeResponse$ = this.selectedCountry$.pipe(
       switchMap((selectedCountry: Country | undefined ) =>  
         this.httpClient.get<TimeResponse>('https://worldtimeapi.org/api/timezone/' + selectedCountry?.timezone))
     );
-    this.timeResponse$.subscribe((timeResp: TimeResponse) => {
+    timeResponse$.subscribe((timeResp: TimeResponse) => {
       const timeStr = timeResp?.datetime?.match(/T(\d{2}:\d{2}):/)?.pop();
       const hours = parseInt(timeStr?.split(':').shift() || '');
       const minutes = parseInt(timeStr?.split(':').pop() || '');

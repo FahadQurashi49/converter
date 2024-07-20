@@ -7,7 +7,7 @@
       <app-country [(selectedCountry)]="selCountry"></app-country>
       <app-time [selectedCountry]="selCountry()"></app-time>
       <app-currency></app-currency>
-      <app-weather></app-weather>
+      <app-weather [selectedCountry]="selCountry()"></app-weather>
     </div>
   </div>
 </main>
