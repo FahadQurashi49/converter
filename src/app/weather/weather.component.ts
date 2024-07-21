@@ -3,8 +3,8 @@ import { Country } from '../country/country.model';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs';
-import { TimeResponse } from '../time/time.model';
 import { Weather, WeatherResponse } from './weather.model';
+import { weatherApiKey } from '../../apiKeys';
 
 @Component({
   selector: 'app-weather',
@@ -14,8 +14,6 @@ import { Weather, WeatherResponse } from './weather.model';
   styleUrl: './weather.component.css'
 })
 export class WeatherComponent {
-  private weatherApiKey = '';
-
 
   selectedCountry = input<Country>();
   selectedCountry$ = toObservable(this.selectedCountry);
@@ -37,7 +35,7 @@ export class WeatherComponent {
   private getWeatherApiEndPoint(timeZone: string | undefined): string {
     if (timeZone) {
       const city = timeZone.split('/').pop();
-      return `http://api.weatherapi.com/v1/current.json?key=${this.weatherApiKey}&q=${city}&aqi=no`;
+      return `http://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${city}&aqi=no`;
     }
     return '';
 
