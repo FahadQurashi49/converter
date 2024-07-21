@@ -2,7 +2,7 @@ export interface Country {
     id: number;
     name: string;
     timezone: string;
-    isCurrent: boolean;
+    currency: string;
 }
 
 export interface CountryResponse {

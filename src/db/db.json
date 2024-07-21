@@ -4,61 +4,61 @@
             {
                 "id": "1",
                 "name": "Australia",
-                "isCurrent": true,
+                "currency": "AUD",
                 "timezone": "Australia/Sydney"
             },
             {
                 "id": "2",
                 "name": "Canada",
-                "isCurrent": false,
+                "currency": "CAD",
                 "timezone": "America/Toronto"
             },
             {
                 "id": "3",
                 "name": "Finland",
-                "isCurrent": false,
+                "currency": "EUR",
                 "timezone": "Europe/Tallinn"
             },
             {
                 "id": "4",
                 "name": "Germany",
-                "isCurrent": false,
+                "currency": "EUR",
                 "timezone": "Europe/Berlin"
             },
             {
                 "id": "5",
                 "name": "Pakistan",
-                "isCurrent": true,
+                "currency": "PKR",
                 "timezone": "Asia/Karachi"
             },
             {
                 "id": "6",
                 "name": "Poland",
-                "isCurrent": false,
+                "currency": "PLN",
                 "timezone": "Europe/Warsaw"
             },
             {
                 "id": "7",
                 "name": "Saudi Arabia",
-                "isCurrent": true,
+                "currency": "SAR",
                 "timezone": "Asia/Riyadh"
             },
             {
                 "id": "8",
                 "name": "United Arab Emirates",
-                "isCurrent": true,
+                "currency": "AED",
                 "timezone": "Asia/Dubai"
             },
             {
                 "id": "9",
                 "name": "United Kingdom",
-                "isCurrent": true,
+                "currency": "GBP",
                 "timezone": "Europe/London"
             },
             {
                 "id": "10",
                 "name": "United States",
-                "isCurrent": true,
+                "currency": "USD",
                 "timezone": "America/New_York"
             }
         ]

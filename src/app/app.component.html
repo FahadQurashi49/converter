@@ -6,7 +6,7 @@
     <div class="grid items-center md:grid-cols-4">
       <app-country [(selectedCountry)]="selCountry"></app-country>
       <app-time [selectedCountry]="selCountry()"></app-time>
-      <app-currency></app-currency>
+      <app-currency [selectedCountry]="selCountry()"></app-currency>
       <app-weather [selectedCountry]="selCountry()"></app-weather>
     </div>
   </div>
