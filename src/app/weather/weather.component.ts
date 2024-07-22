@@ -15,15 +15,15 @@ import { weatherApiKey } from '../../apiKeys';
 })
 export class WeatherComponent {
 
-  selectedCountry = input<Country>();
+  selectedCountry = input.required<Country>();
   selectedCountry$ = toObservable(this.selectedCountry);
   weather = signal<Weather>({ temparature: 30 });
 
   constructor(private httpClient: HttpClient) {
 
     const weatherResponse$ = this.selectedCountry$.pipe(
-      switchMap((selectedCountry: Country | undefined) => {
-        const weatherApiEndpoint = this.getWeatherApiEndPoint(this.selectedCountry()?.timezone);
+      switchMap((selectedCountry: Country) => {
+        const weatherApiEndpoint = this.getWeatherApiEndPoint(selectedCountry.timezone);
         return this.httpClient.get<WeatherResponse>(weatherApiEndpoint);
       }
       ));

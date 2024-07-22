@@ -1,5 +1,18 @@
-<main>
-    <div>
-        <span>1&nbsp;{{ selectedCountry()?.currency }}</span>
-    </div>
+<main class="grid items-center md:grid-cols-2" >
+    @if (selectedCountry() && currencyMap() && currencyMap().size) {
+        <div>
+            <span>1&nbsp;{{ selectedCountry().currency }}</span>
+        </div>
+        <div>
+            <span>{{ currencyMap().get(selectedCountry().currency || 'USD') }}&nbsp;{{baseCurrencyCode}}</span>
+        </div>
+    } @else {
+        <div>
+            <span>1&nbsp;{{ selectedCountry().currency }}</span>
+        </div>
+        <div>
+            <span>Loader</span>
+        </div>
+    }
+    
 </main>

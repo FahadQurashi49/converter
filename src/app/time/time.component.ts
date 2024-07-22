@@ -15,14 +15,14 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 })
 export class TimeComponent {
 
-  selectedCountry = input<Country>();
+  selectedCountry = input.required<Country>();
   selectedCountry$ = toObservable(this.selectedCountry);
   time = signal<Time>({ hours: 0, minutes: 0});
 
   constructor(private httpClient: HttpClient) {
     const timeResponse$ = this.selectedCountry$.pipe(
-      switchMap((selectedCountry: Country | undefined ) =>  
-        this.httpClient.get<TimeResponse>('https://worldtimeapi.org/api/timezone/' + selectedCountry?.timezone))
+      switchMap((selectedCountry: Country ) =>  
+        this.httpClient.get<TimeResponse>('https://worldtimeapi.org/api/timezone/' + selectedCountry.timezone))
     );
     timeResponse$.subscribe((timeResp: TimeResponse) => {
       const timeStr = timeResp?.datetime?.match(/T(\d{2}:\d{2}):/)?.pop();
