@@ -1,10 +1,8 @@
 export interface Time {
-    hours: number;
-    minutes: number;
-    day?: number;
-    month?: string;
-    unixTime?: number;
-    timezone?: string;
+    meridianHours: string;
+    minutes: string;
+    meridian: 'AM' | 'PM';
+
 }
 
 export interface TimeResponse {
