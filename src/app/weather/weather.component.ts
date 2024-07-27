@@ -4,7 +4,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
 import { catchError, of, switchMap } from 'rxjs';
 import { Weather, WeatherResponse } from './weather.model';
-import { weatherApiKey } from '../../apiKeys';
+import { getWeatherApiEndPoint } from '../../apiKeys';
 
 @Component({
   selector: 'app-weather',
@@ -23,7 +23,7 @@ export class WeatherComponent {
 
     const weatherResponse$ = this.selectedCountry$.pipe(
       switchMap((selectedCountry: Country) => {
-        const weatherApiEndpoint = this.getWeatherApiEndPoint(selectedCountry.timezone);
+        const weatherApiEndpoint = getWeatherApiEndPoint(selectedCountry.timezone);
         return this.httpClient.get<WeatherResponse>(weatherApiEndpoint);
       }),
       catchError((err: any) => {
@@ -36,13 +36,6 @@ export class WeatherComponent {
       this.weather.set({ temparature: Math.floor(weatherResp.current.temp_c) }));
   }
 
-  private getWeatherApiEndPoint(timeZone: string | undefined): string {
-    if (timeZone) {
-      const city = timeZone.split('/').pop();
-      return `http://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${city}&aqi=no`;
-    }
-    return '';
-
-  }
+  
 
 }

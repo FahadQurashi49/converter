@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Signal, model, signal } from '@angular/core';
+import { Component, OnInit, Signal, model } from '@angular/core';
 import { Country, CountryResponse } from './country.model';
 import { catchError, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { toSignal } from '@angular/core/rxjs-interop';
+import { serverApiEndPoint } from '../../apiKeys';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class CountryComponent implements OnInit {
 
   constructor(private httpClient: HttpClient) {
     const countryResponse$ = 
-      this.httpClient.get<CountryResponse>('http://localhost:3000/country')
+      this.httpClient.get<CountryResponse>(serverApiEndPoint)
       .pipe(
         catchError((err: any) => {
           console.error('Unable to fetch country list: ', err);

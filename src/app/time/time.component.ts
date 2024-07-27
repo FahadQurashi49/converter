@@ -5,6 +5,7 @@ import { Time, TimeResponse } from './time.model';
 import { CommonModule } from '@angular/common';
 import { catchError, of, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { timeApiEndPoint } from '../../apiKeys';
 
 @Component({
   selector: 'app-time',
@@ -22,7 +23,7 @@ export class TimeComponent {
   constructor(private httpClient: HttpClient) {
     let timeResponse$ = this.selectedCountry$.pipe(
       switchMap((selectedCountry: Country ) =>  
-        this.httpClient.get<TimeResponse>('https://worldtimeapi.org/api/timezone/' + selectedCountry.timezone)),
+        this.httpClient.get<TimeResponse>(timeApiEndPoint + selectedCountry.timezone)),
       catchError((err: any) => {
         console.error('Unable to fetch time data: ', err);
         return of({ datetime: 'T00:00:'});
