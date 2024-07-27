@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, model, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CountryComponent } from './country/country.component';
 import { TimeComponent } from './time/time.component';
@@ -17,6 +17,7 @@ import { NavbarComponent } from "./navbar/navbar.component";
 export class AppComponent {
   initialCountry: Country = { id: 5, name: "Pakistan", currency: 'PKR', timezone: "Asia/Karachi" }
   selCountry = signal<Country>(this.initialCountry);
+  errorMsg = signal<string>('');
 
   // onSelectedCountryChange (country: any) {
   //   console.log(country);

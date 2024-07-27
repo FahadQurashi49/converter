@@ -1,4 +1,4 @@
-import { Component, OnInit, input, signal } from '@angular/core';
+import { Component, OnInit, input, model, signal } from '@angular/core';
 import { Country } from '../country/country.model';
 import { CurrencyResponse } from './currency.model';
 import { HttpClient } from '@angular/common/http';
@@ -18,16 +18,19 @@ export class CurrencyComponent implements OnInit {
   baseCurrencyCode = 'USD';
   
   currencyMap = signal<Map<string, number>>(new Map());
+  errorMsg = model.required<string>();
 
   constructor(private httpClient: HttpClient) {
     // fetch currencies on ngOnInit b/c it does not have any dep on selectedCountry signal
   }
   ngOnInit(): void {
+    this.errorMsg.set('');
     const currencyResponse$ = this.httpClient
       .get<CurrencyResponse>(currencyApiEndPoint)
       .pipe(
         catchError((err: any) => {
           console.error('Unable to fetch currencies data: ', err);
+          this.errorMsg.set('Unable to fetch currencies data');
           return  of({ data: {} });
         })
       );

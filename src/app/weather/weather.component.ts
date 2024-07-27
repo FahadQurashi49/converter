@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, model, signal } from '@angular/core';
 import { Country } from '../country/country.model';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
@@ -18,16 +18,19 @@ export class WeatherComponent {
   selectedCountry = input.required<Country>();
   selectedCountry$ = toObservable(this.selectedCountry);
   weather = signal<Weather>({ temparature: 30 });
+  errorMsg = model.required<string>();
 
   constructor(private httpClient: HttpClient) {
 
     const weatherResponse$ = this.selectedCountry$.pipe(
       switchMap((selectedCountry: Country) => {
+        this.errorMsg.set('');
         const weatherApiEndpoint = getWeatherApiEndPoint(selectedCountry.timezone);
         return this.httpClient.get<WeatherResponse>(weatherApiEndpoint);
       }),
       catchError((err: any) => {
         console.error('Unable to fetch weather data: ', err);
+        this.errorMsg.set('Unable to fetch weather data');
         return of({current: { temp_c: 30, temp_f: 97 }});
       })
     );

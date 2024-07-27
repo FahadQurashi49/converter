@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, model, signal } from '@angular/core';
 import { Country } from '../country/country.model';
 import { HttpClient } from '@angular/common/http';
 import { Time, TimeResponse } from './time.model';
@@ -19,13 +19,18 @@ export class TimeComponent {
   selectedCountry = input.required<Country>();
   selectedCountry$ = toObservable(this.selectedCountry);
   time = signal<Time>({ meridianHours: '12', minutes: '00', meridian: 'AM'});
+  errorMsg = model.required<string>();
 
   constructor(private httpClient: HttpClient) {
     let timeResponse$ = this.selectedCountry$.pipe(
-      switchMap((selectedCountry: Country ) =>  
-        this.httpClient.get<TimeResponse>(timeApiEndPoint + selectedCountry.timezone)),
+      switchMap((selectedCountry: Country ) =>  {
+        this.errorMsg.set('');
+        return this.httpClient.get<TimeResponse>(timeApiEndPoint + selectedCountry.timezone);
+      }
+        ),
       catchError((err: any) => {
         console.error('Unable to fetch time data: ', err);
+        this.errorMsg.set('Unable to fetch time data');
         return of({ datetime: 'T00:00:'});
       })
     );

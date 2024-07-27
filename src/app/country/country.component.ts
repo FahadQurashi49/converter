@@ -20,6 +20,7 @@ export class CountryComponent implements OnInit {
   selectedCountry = model.required<Country>();
   countryResponse:  Signal<CountryResponse>
   selectedCountryId: number = 5;
+  errorMsg = model.required<string>();
 
   ngOnInit(): void {
     this.selectedCountryId = this.selectedCountry().id;
@@ -32,6 +33,7 @@ export class CountryComponent implements OnInit {
       .pipe(
         catchError((err: any) => {
           console.error('Unable to fetch country list: ', err);
+          this.errorMsg.set('Unable to fetch country list');
           return of({ countryList: [this.selectedCountry()] });
         })
       )
