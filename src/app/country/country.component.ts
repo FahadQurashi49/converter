@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Signal, model, signal } from '@angular/core';
 import { Country, CountryResponse } from './country.model';
-import { Observable, map } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -17,7 +17,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 export class CountryComponent implements OnInit {
 
   selectedCountry = model.required<Country>();
-  countries: Country[] | undefined;
   countryResponse:  Signal<CountryResponse>
   selectedCountryId: number = 5;
 
@@ -27,8 +26,16 @@ export class CountryComponent implements OnInit {
   
 
   constructor(private httpClient: HttpClient) {
+    const countryResponse$ = 
+      this.httpClient.get<CountryResponse>('http://localhost:3000/country')
+      .pipe(
+        catchError((err: any) => {
+          console.error('Unable to fetch country list: ', err);
+          return of({ countryList: [this.selectedCountry()] });
+        })
+      )
     this.countryResponse = 
-      toSignal(this.httpClient.get<CountryResponse>('http://localhost:3000/country'), { initialValue: { countryList: [] }, requireSync: false });  
+      toSignal(countryResponse$, { initialValue: { countryList: [] }, requireSync: false });  
   }
   
   

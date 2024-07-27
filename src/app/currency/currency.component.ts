@@ -3,6 +3,7 @@ import { Country } from '../country/country.model';
 import { CurrencyResponse } from './currency.model';
 import { HttpClient } from '@angular/common/http';
 import { currencyApiKey } from '../../apiKeys';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-currency',
@@ -23,7 +24,13 @@ export class CurrencyComponent implements OnInit {
   }
   ngOnInit(): void {
     const currencyResponse$ = this.httpClient
-      .get<CurrencyResponse>(`https://api.currencyapi.com/v3/latest?apikey=${currencyApiKey}&currencies=AUD%2CCAD%2CEUR%2CPKR%2CPLN%2CSAR%2CAED%2CGBP%2CUSD`);
+      .get<CurrencyResponse>(`https://api.currencyapi.com/v3/latest?apikey=${currencyApiKey}&currencies=AUD%2CCAD%2CEUR%2CPKR%2CPLN%2CSAR%2CAED%2CGBP%2CUSD`)
+      .pipe(
+        catchError((err: any) => {
+          console.error('Unable to fetch currencies data: ', err);
+          return  of({ data: {} });
+        })
+      );
   
       currencyResponse$.subscribe((currencyResponse: CurrencyResponse) => {
       if (currencyResponse && currencyResponse.data && this.currencyMap().size === 0) {

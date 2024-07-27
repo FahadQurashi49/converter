@@ -5,9 +5,21 @@ see: https://stackoverflow.com/a/78763575/4233036
     https://stackoverflow.com/a/78754419/4233036
 -->
 <main>
-    <select name="countries" id="countries-selection" class="bg-gray-50" [(ngModel)]="selectedCountryId" (change)="onCountrySelectionChange($event)">
-        @for (country of countryResponse().countryList; track country.id) {
-            <option [value]="country.id">{{ country.name }}</option>
+    <select name="countries" id="countries-selection" class="bg-gray-50" [(ngModel)]="selectedCountryId"
+        (change)="onCountrySelectionChange($event)">
+        @if (countryResponse()) {
+            @for (country of countryResponse().countryList; track country.id) {
+                    <option [value]="country.id">{{ country.name }}</option>
+            }
+        } @else {
+            <option [value]="selectedCountryId">{{ selectedCountry() }}</option>
         }
+        
     </select>
+
+
+    
+        
+    
+
 </main>

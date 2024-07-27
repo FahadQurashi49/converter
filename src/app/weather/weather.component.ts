@@ -2,7 +2,7 @@ import { Component, input, signal } from '@angular/core';
 import { Country } from '../country/country.model';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { HttpClient } from '@angular/common/http';
-import { switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 import { Weather, WeatherResponse } from './weather.model';
 import { weatherApiKey } from '../../apiKeys';
 
@@ -25,8 +25,12 @@ export class WeatherComponent {
       switchMap((selectedCountry: Country) => {
         const weatherApiEndpoint = this.getWeatherApiEndPoint(selectedCountry.timezone);
         return this.httpClient.get<WeatherResponse>(weatherApiEndpoint);
-      }
-      ));
+      }),
+      catchError((err: any) => {
+        console.error('Unable to fetch weather data: ', err);
+        return of({current: { temp_c: 30, temp_f: 97 }});
+      })
+    );
 
     weatherResponse$.subscribe((weatherResp: WeatherResponse) => 
       this.weather.set({ temparature: Math.floor(weatherResp.current.temp_c) }));

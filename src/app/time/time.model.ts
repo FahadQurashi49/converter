@@ -6,7 +6,5 @@ export interface Time {
 }
 
 export interface TimeResponse {
-    unixtime: number;
-    timezone: string;
     datetime: string;
 }

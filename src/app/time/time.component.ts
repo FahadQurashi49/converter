@@ -1,10 +1,10 @@
-import { Component, OnInit, input, effect, signal, Signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { Country } from '../country/country.model';
 import { HttpClient } from '@angular/common/http';
 import { Time, TimeResponse } from './time.model';
 import { CommonModule } from '@angular/common';
-import { Observable, map, switchMap } from 'rxjs';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { catchError, of, switchMap } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-time',
@@ -20,10 +20,15 @@ export class TimeComponent {
   time = signal<Time>({ meridianHours: '12', minutes: '00', meridian: 'AM'});
 
   constructor(private httpClient: HttpClient) {
-    const timeResponse$ = this.selectedCountry$.pipe(
+    let timeResponse$ = this.selectedCountry$.pipe(
       switchMap((selectedCountry: Country ) =>  
-        this.httpClient.get<TimeResponse>('https://worldtimeapi.org/api/timezone/' + selectedCountry.timezone))
+        this.httpClient.get<TimeResponse>('https://worldtimeapi.org/api/timezone/' + selectedCountry.timezone)),
+      catchError((err: any) => {
+        console.error('Unable to fetch time data: ', err);
+        return of({ datetime: 'T00:00:'});
+      })
     );
+    
     timeResponse$.subscribe((timeResp: TimeResponse) => { 
       const timeStr = timeResp?.datetime?.match(/T(\d{2}:\d{2}):/)?.pop();
       // extract hours and minute strings from the response
@@ -42,7 +47,7 @@ export class TimeComponent {
       
       // convert minutes to string to contain a leading 0 if minutes is less than 10
       // e.g.: 03
-      minutesStr = minutes < 10 ? `0${minutesStr}` : minutesStr;
+      // minutesStr = minutes < 10 ? `0${minutesStr}` : minutesStr;
       console.log('from time component', { hours, minutes });
 
       this.time.set({ meridianHours: meridianHourStr, minutes: minutesStr, meridian: meridian });
