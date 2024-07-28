@@ -1,9 +1,9 @@
-import { Component, input, model, signal } from '@angular/core';
+import { Component, OnDestroy, input, model, signal } from '@angular/core';
 import { Country } from '../country/country.model';
 import { HttpClient } from '@angular/common/http';
 import { Time, TimeResponse } from './time.model';
 import { CommonModule } from '@angular/common';
-import { catchError, of, switchMap } from 'rxjs';
+import { Subscription, catchError, of, switchMap } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { timeApiEndPoint } from '../../apiKeys';
 
@@ -14,11 +14,12 @@ import { timeApiEndPoint } from '../../apiKeys';
   templateUrl: './time.component.html',
   styleUrl: './time.component.css'
 })
-export class TimeComponent {
+export class TimeComponent implements OnDestroy {
 
   selectedCountry = input.required<Country>();
   selectedCountry$ = toObservable(this.selectedCountry);
   time = signal<Time>({ meridianHours: '12', minutes: '00', meridian: 'AM'});
+  timeSubscription: Subscription;
   errorMsg = model.required<string>();
 
   constructor(private httpClient: HttpClient) {
@@ -35,7 +36,7 @@ export class TimeComponent {
       })
     );
     
-    timeResponse$.subscribe((timeResp: TimeResponse) => { 
+    this.timeSubscription = timeResponse$.subscribe((timeResp: TimeResponse) => { 
       const timeStr = timeResp?.datetime?.match(/T(\d{2}:\d{2}):/)?.pop();
       // extract hours and minute strings from the response
       const hoursStr = timeStr?.split(':').shift() || '';
@@ -54,9 +55,13 @@ export class TimeComponent {
       // convert minutes to string to contain a leading 0 if minutes is less than 10
       // e.g.: 03
       // minutesStr = minutes < 10 ? `0${minutesStr}` : minutesStr;
-      console.log('from time component', { hours, minutes });
+      // console.log('from time component', { hours, minutes });
 
       this.time.set({ meridianHours: meridianHourStr, minutes: minutesStr, meridian: meridian });
     });
   }
+  ngOnDestroy(): void {
+    this.timeSubscription.unsubscribe()
+  }
+
 }

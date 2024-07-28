@@ -1,9 +1,9 @@
-import { Component, OnInit, input, model, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, input, model, signal } from '@angular/core';
 import { Country } from '../country/country.model';
 import { CurrencyResponse } from './currency.model';
 import { HttpClient } from '@angular/common/http';
 import { currencyApiEndPoint } from '../../apiKeys';
-import { catchError, of } from 'rxjs';
+import { Subscription, catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-currency',
@@ -12,12 +12,12 @@ import { catchError, of } from 'rxjs';
   templateUrl: './currency.component.html',
   styleUrl: './currency.component.css'
 })
-export class CurrencyComponent implements OnInit {
+export class CurrencyComponent implements OnInit, OnDestroy {
 
   selectedCountry = input.required<Country>();
   baseCurrencyCode = 'USD';
-  
   currencyMap = signal<Map<string, number>>(new Map());
+  currencyResponseSubscription: Subscription | null = null;
   errorMsg = model.required<string>();
 
   constructor(private httpClient: HttpClient) {
@@ -35,7 +35,7 @@ export class CurrencyComponent implements OnInit {
         })
       );
   
-      currencyResponse$.subscribe((currencyResponse: CurrencyResponse) => {
+      this.currencyResponseSubscription = currencyResponse$.subscribe((currencyResponse: CurrencyResponse) => {
       if (currencyResponse && currencyResponse.data && this.currencyMap().size === 0) {
         const keys = Object.keys(currencyResponse.data);
         keys.forEach((currencyCode) => { // keys of data object are currency code
@@ -45,5 +45,9 @@ export class CurrencyComponent implements OnInit {
       }
 
     });
+  }
+
+  ngOnDestroy(): void {
+    this.currencyResponseSubscription?.unsubscribe();
   }
 }
