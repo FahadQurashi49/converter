@@ -4,7 +4,9 @@
 
 <main>
   <div class="grid md: grid-cols-1 place-items-center">
-    <div class="md: m-44"></div>
+    <div class="heading-text">Country Compare</div>
+    <div class="sub-text">Country Time, Currency, weather comparison in one place</div>
+    <div class="paragraph-text">Country compare provides time, currency and weather comparison of 10 counties on a single panel <p> And ability to change countries for comparison to make your immigration decision easier</p></div>
     <div class="card p-4 lg:h-[56px] lg:w-[654.56px]">
       <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xs: space-y-3 lg:space-y-0 place-items-center">
         <app-country  [(errorMsg)]="errorMsg" [(selectedCountry)]="selCountry"></app-country>
