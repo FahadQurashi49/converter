@@ -1,12 +1,13 @@
-<main>
+<main class="ml-2">
     <span id="hours">
-        <span>00</span>
+        <span>{{ time().meridianHours }}</span>
     </span>
     <span>&nbsp;:&nbsp;</span>
-    <span id="seconds">
-        <span>00</span>
-    </span>
-    <span id="meridiem">
-        <span>&nbsp;AM</span>
-    </span>
+    <span id="minutes">
+        <span>{{ time().minutes }}</span>
+    </span> 
+    <span>&nbsp;</span>
+    <span id="meridian">
+        <span>{{ time().meridian }}</span>
+    </span> 
 </main>

@@ -1,0 +1,66 @@
+{
+    "country": {
+        "countryList": [
+            {
+                "id": "1",
+                "name": "Australia",
+                "currency": "AUD",
+                "timezone": "Australia/Sydney"
+            },
+            {
+                "id": "2",
+                "name": "Canada",
+                "currency": "CAD",
+                "timezone": "America/Toronto"
+            },
+            {
+                "id": "3",
+                "name": "Finland",
+                "currency": "EUR",
+                "timezone": "Europe/Tallinn"
+            },
+            {
+                "id": "4",
+                "name": "Germany",
+                "currency": "EUR",
+                "timezone": "Europe/Berlin"
+            },
+            {
+                "id": "5",
+                "name": "Pakistan",
+                "currency": "PKR",
+                "timezone": "Asia/Karachi"
+            },
+            {
+                "id": "6",
+                "name": "Poland",
+                "currency": "PLN",
+                "timezone": "Europe/Warsaw"
+            },
+            {
+                "id": "7",
+                "name": "Saudi Arabia",
+                "currency": "SAR",
+                "timezone": "Asia/Riyadh"
+            },
+            {
+                "id": "8",
+                "name": "United Arab Emirates",
+                "currency": "AED",
+                "timezone": "Asia/Dubai"
+            },
+            {
+                "id": "9",
+                "name": "United Kingdom",
+                "currency": "GBP",
+                "timezone": "Europe/London"
+            },
+            {
+                "id": "10",
+                "name": "United States",
+                "currency": "USD",
+                "timezone": "America/New_York"
+            }
+        ]
+    }
+}

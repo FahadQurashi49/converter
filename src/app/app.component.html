@@ -1,12 +1,21 @@
-<div class="underline font-bold">Country Compare</div>
+<app-navbar></app-navbar>
 
-<main class="flex h-screen">
-  <div class="m-auto">
-    <div class="grid items-center md:grid-cols-4">
-      <app-country></app-country>
-      <app-time></app-time>
-      <app-currency></app-currency>
-      <app-weather></app-weather>
+<!-- tailwind tutorial netninja: https://github.com/iamshaunjp/tailwind-tutorial -->
+
+<main>
+  <div class="grid md: grid-cols-1 place-items-center">
+    <div class="heading-text">Country Compare</div>
+    <div class="sub-text">Country Time, Currency, weather comparison in one place</div>
+    <div class="paragraph-text">Country compare provides time, currency and weather comparison of 10 counties on a single panel <p> And ability to change countries for comparison to make your immigration decision easier</p></div>
+    <div class="card p-4 lg:h-[56px] lg:w-[654.56px]">
+      <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xs: space-y-3 lg:space-y-0 place-items-center">
+        <app-country  [(errorMsg)]="errorMsg" [(selectedCountry)]="selCountry"></app-country>
+        <app-time  [(errorMsg)]="errorMsg" [selectedCountry]="selCountry()"></app-time>
+        <app-currency  [(errorMsg)]="errorMsg" [selectedCountry]="selCountry()"></app-currency>
+        <app-weather [(errorMsg)]="errorMsg"  [selectedCountry]="selCountry()"></app-weather>
+      </div>
     </div>
+    <div class="md: m-20"></div>
+    <div class="text-red-500">{{ errorMsg() }}</div>
   </div>
 </main>

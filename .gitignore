@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+#Keys
+apiKeys.ts
+
+#misc
+scratch.txt
